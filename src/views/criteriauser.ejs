@@ -78,7 +78,7 @@
                 </td>
                 <td><%=reward[i].point%></td>
                 <td><%=reward[i].date%></td>
-                <td><a class="btn btn-danger">xóa</a></td>
+                <td><a href="/delete-history?id=<%=reward[i].id%>&iduser=<%= user.id%>" class="btn btn-danger">xóa</a></td>
               </tr>
               <% } %>
             </tbody>

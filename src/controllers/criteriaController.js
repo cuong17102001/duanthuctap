@@ -102,6 +102,17 @@ let deleteCriteria = async(req , res)=>{
     return res.redirect('/criteria')
 }
 
+let deleteReward = async(req , res)=>{
+    let id = req.query.id
+    let iduser = req.query.iduser
+    await db.RewardPoints.destroy({
+        where:{
+            id:id
+        }
+    })
+    return res.redirect('/criteria-user?id='+iduser)
+}
+
 module.exports = {
     criteriaPage,
     criteriaUserPage,
@@ -110,6 +121,7 @@ module.exports = {
     editCriteriaPage,
     addCriteria,
     criteriaPost,
-    deleteCriteria
+    deleteCriteria,
+    deleteReward
     
 }

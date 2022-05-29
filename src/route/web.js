@@ -33,6 +33,8 @@ let initWebRoutes = (app) => {
     router.post('/criteria-post',authenMiddleware.RoleManage,criteriaController.criteriaPost)
     router.get('/delete-criteria',authenMiddleware.RoleManage, criteriaController.deleteCriteria)
 
+    router.get('/delete-history' , authenMiddleware.RoleManage ,criteriaController.deleteReward )
+
     //trang nhân viên   
 
     router.get('/login',homeController.loginPage )
