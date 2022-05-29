@@ -1,6 +1,6 @@
 import db from "../models/index";
 const { Op } = require("sequelize");
-
+import sequelize from "sequelize"
 let getHomePage = async (req, res) =>{
 
         let user = req.session.user
@@ -128,7 +128,65 @@ let logout = (req , res) =>{
 }
 
 
+let getHomePageEmployee = async(req , res)=>{
+    let d = new Date();
+    let monthnow = d.getMonth() + 1;
+    let yearnow = d.getFullYear()
 
+
+    let month = null;
+
+    if(!req.query.month){
+        month = monthnow
+    }else{
+        month = req.query.month
+
+    }
+    let sort = null;
+    if(!req.query.sort){
+        sort = "DESC"
+    }else{
+        sort = req.query.sort
+    }
+
+
+    console.log(sort);
+    
+    let employee = await db.Employee.findAll()
+
+    let pointTotal = await db.RewardPoints.findAll({
+        attributes:[
+            'idEmployee',
+            [sequelize.fn('SUM', sequelize.col('point')), 'total'], 
+        ],
+        where:{
+            [Op.and]:[
+                {
+                    date : {
+                        [Op.like]: '%_____'+month+'___%'
+                    },
+                },
+                {
+                    date : {
+                        [Op.like]: '%'+yearnow+'______%'
+                    },
+                },
+            ]
+            
+
+        },
+        group: ["idEmployee"],
+        order:[
+            [sequelize.fn('SUM', sequelize.col('point')) , sort]
+        ]
+    })
+    return res.render('homepageemployee.ejs' , {
+        month:month,
+        sort:sort,
+        pointTotal:pointTotal,
+        employee:employee
+    })
+}
 
 module.exports = {
     getHomePage: getHomePage,
@@ -136,4 +194,5 @@ module.exports = {
     login:login,
     type:type,
     logout,
+    getHomePageEmployee
 }

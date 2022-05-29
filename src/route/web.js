@@ -42,6 +42,8 @@ let initWebRoutes = (app) => {
 
     router.get('/logout',homeController.logout)
   
+
+    router.get('/home' , homeController.getHomePageEmployee)
     return app.use("/" , router);
 }
 
