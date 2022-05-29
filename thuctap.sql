@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 26, 2022 lúc 07:51 PM
+-- Thời gian đã tạo: Th5 29, 2022 lúc 12:13 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 7.4.29
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `thuctap`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `criteria`
+--
+
+CREATE TABLE `criteria` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `point` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `criteria`
+--
+
+INSERT INTO `criteria` (`id`, `name`, `point`, `createdAt`, `updatedAt`) VALUES
+(1, 'chơi game', -9, '2022-05-28 13:08:49', '2022-05-29 16:05:10'),
+(3, 'đi sớm', 2, '2022-05-28 15:35:44', '2022-05-28 15:35:44'),
+(5, 'đi muộn', -10, '2022-05-29 00:35:21', '2022-05-29 00:35:21');
 
 -- --------------------------------------------------------
 
@@ -47,31 +70,7 @@ INSERT INTO `employees` (`id`, `username`, `password`, `name`, `date`, `role`, `
 (2, 'user1', '123456', 'cường', '18/6/2020', 1, '2022-05-24 16:21:24', '2022-05-24 16:21:24'),
 (6, 'user7', '123456', 'nguyễn văn b', '17/4/2021', 1, '2022-05-25 22:19:00', '2022-05-25 22:19:00'),
 (7, 'user2', '123456', 'cường 123', '17/4/2021', 1, '2022-05-26 15:42:22', '2022-05-26 21:22:29'),
-(8, 'user2', '123456', 'cường đẳng cấp', '17/4/2021', 1, '2022-05-26 17:16:25', '2022-05-26 17:44:38');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `pointtypes`
---
-
-CREATE TABLE `pointtypes` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `point` int(11) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `pointtypes`
---
-
-INSERT INTO `pointtypes` (`id`, `name`, `point`, `createdAt`, `updatedAt`) VALUES
-(1, 'đi muộn', -2, '2022-05-24 18:08:35', '2022-05-24 18:08:35'),
-(2, 'đi sớm', 2, '2022-05-24 18:08:44', '2022-05-24 18:08:44'),
-(8, 'chơi game', -5, '2022-05-26 21:57:23', '2022-05-26 23:13:14'),
-(9, 'đi chơi', -9, '2022-05-27 00:09:25', '2022-05-27 00:09:25');
+(11, 'user4', '123456', 'trùm', '17/4/2021', 1, '2022-05-29 15:59:24', '2022-05-29 15:59:24');
 
 -- --------------------------------------------------------
 
@@ -82,8 +81,9 @@ INSERT INTO `pointtypes` (`id`, `name`, `point`, `createdAt`, `updatedAt`) VALUE
 CREATE TABLE `rewardpoints` (
   `id` int(11) NOT NULL,
   `idEmployee` int(11) DEFAULT NULL,
-  `idType` int(11) DEFAULT NULL,
-  `date` date DEFAULT NULL,
+  `idCriteria` int(11) DEFAULT NULL,
+  `point` int(11) DEFAULT NULL,
+  `date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -92,17 +92,17 @@ CREATE TABLE `rewardpoints` (
 -- Đang đổ dữ liệu cho bảng `rewardpoints`
 --
 
-INSERT INTO `rewardpoints` (`id`, `idEmployee`, `idType`, `date`, `createdAt`, `updatedAt`) VALUES
-(11, 2, 2, '2022-06-08', '2022-05-25 20:45:31', '2022-05-25 20:45:31'),
-(14, 6, 1, '2022-05-06', '2022-05-25 22:19:06', '2022-05-25 22:19:06'),
-(16, 2, 1, '2022-05-26', '2022-05-26 17:12:01', '2022-05-26 17:12:01'),
-(17, 2, 1, '2022-05-13', '2022-05-26 17:12:07', '2022-05-26 17:12:07'),
-(23, 2, 1, '2022-04-28', '2022-05-26 21:21:43', '2022-05-26 21:21:43'),
-(24, 8, 8, '2022-05-26', '2022-05-26 21:59:27', '2022-05-26 21:59:27'),
-(26, 8, 1, '2022-05-27', '2022-05-26 23:54:17', '2022-05-26 23:54:17'),
-(27, 8, 2, '2022-05-26', '2022-05-26 23:54:30', '2022-05-26 23:54:30'),
-(28, 8, 9, '2022-05-26', '2022-05-27 00:09:37', '2022-05-27 00:09:37'),
-(29, 8, 9, '2022-04-22', '2022-05-27 00:10:06', '2022-05-27 00:10:06');
+INSERT INTO `rewardpoints` (`id`, `idEmployee`, `idCriteria`, `point`, `date`, `createdAt`, `updatedAt`) VALUES
+(7, 1, 3, 2, '2022-05-28', '2022-05-29 03:16:23', '2022-05-29 03:16:23'),
+(8, 2, 5, -10, '2022-05-28', '2022-05-29 03:16:26', '2022-05-29 03:16:26'),
+(9, 6, 5, -10, '2021-05-28', '2022-05-29 03:16:31', '2022-05-29 03:16:31'),
+(10, 2, 3, 2, '2022-05-28', '2022-05-29 03:16:34', '2022-05-29 03:16:34'),
+(11, 1, 1, -5, '2022-05-28', '2022-05-29 03:17:29', '2022-05-29 03:17:29'),
+(12, 2, 1, -5, '2022-04-06', '2022-05-29 11:25:43', '2022-05-29 11:25:43'),
+(13, 7, 1, -5, '2022-04-09', '2022-05-29 11:25:51', '2022-05-29 11:25:51'),
+(14, 2, 3, 2, '2022-04-07', '2022-05-29 15:29:53', '2022-05-29 15:29:53'),
+(15, 7, 3, 2, '2022-05-29', '2022-05-29 15:58:03', '2022-05-29 15:58:03'),
+(16, 7, 1, -9, '2022-05-20', '2022-05-29 17:08:22', '2022-05-29 17:08:22');
 
 -- --------------------------------------------------------
 
@@ -119,8 +119,8 @@ CREATE TABLE `sequelizemeta` (
 --
 
 INSERT INTO `sequelizemeta` (`name`) VALUES
+('migration-create-criteria.js'),
 ('migration-create-employee.js'),
-('migration-create-pointtype.js'),
 ('migration-create-rewardpoints.js');
 
 --
@@ -128,15 +128,15 @@ INSERT INTO `sequelizemeta` (`name`) VALUES
 --
 
 --
--- Chỉ mục cho bảng `employees`
+-- Chỉ mục cho bảng `criteria`
 --
-ALTER TABLE `employees`
+ALTER TABLE `criteria`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `pointtypes`
+-- Chỉ mục cho bảng `employees`
 --
-ALTER TABLE `pointtypes`
+ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -157,22 +157,22 @@ ALTER TABLE `sequelizemeta`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `criteria`
+--
+ALTER TABLE `criteria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT cho bảng `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT cho bảng `pointtypes`
---
-ALTER TABLE `pointtypes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `rewardpoints`
 --
 ALTER TABLE `rewardpoints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

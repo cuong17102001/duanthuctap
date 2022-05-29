@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   RewardPoints.init({
     idEmployee: DataTypes.INTEGER,
-    idType: DataTypes.INTEGER,
+    idCriteria : DataTypes.INTEGER,
+    point: DataTypes.INTEGER,
+    
     date:DataTypes.STRING
   }, {
     sequelize,

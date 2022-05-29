@@ -11,9 +11,13 @@ module.exports = {
       idEmployee: {
         type: Sequelize.INTEGER
       },
-      idType: {
+      idCriteria: {
         type: Sequelize.INTEGER
       },
+      point: {
+        type: Sequelize.INTEGER
+      },
+
       date: {
         type: Sequelize.STRING
       },
